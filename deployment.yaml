@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-web-app
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: simple-web-app
+  template:
+    metadata:
+      labels:
+        app: simple-web-app
+    spec:
+      containers:
+      - name: simple-web-app-pod
+        image: asecurityguru/simple-web-app-in-docker:latest
+        ports: 
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: simple-web-app-service
+spec:
+  selector:
+    app: simple-web-app
+  ports:
+  - name: http
+    protocol: TCP
+    port: 9393
+    targetPort: 8080
+  type: LoadBalancer
