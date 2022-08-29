@@ -28,7 +28,7 @@ pipeline {
      stage('Build') { 
             steps { 
                 script{
-                 app = docker.build("simple-web-app")
+                 app = docker.build("asg")
                 }
             }
         }
