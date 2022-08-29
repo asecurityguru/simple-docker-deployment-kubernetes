@@ -68,7 +68,7 @@ pipeline {
     stage('Kubernetes Deployment - DEV') {
       steps {
         withKubeConfig([credentialsId: 'kubelogin']) {
-          sh "kubectl apply -f deployment.yaml"
+          sh "kubectl apply -f deployment.yaml --namespace=test"
         }
       }
     }
