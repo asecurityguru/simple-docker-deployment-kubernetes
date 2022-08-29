@@ -16,7 +16,7 @@ spec:
       - name: simple-web-app-pod
         image: 145988340565.dkr.ecr.us-west-2.amazonaws.com/asg:9
         ports: 
-        - containerPort: 8080
+        - containerPort: 8081
 ---
 apiVersion: v1
 kind: Service
@@ -29,5 +29,5 @@ spec:
   - name: http
     protocol: TCP
     port: 9393
-    targetPort: 8080
+    targetPort: 8081
   type: LoadBalancer
