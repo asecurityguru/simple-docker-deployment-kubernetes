@@ -17,14 +17,14 @@ pipeline {
 //         bat "mvn test"
 //       }
 //     }
-    stage('Docker Build and Push') {
-      steps {
-        withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
-          bat 'docker build -t asecurityguru/simple-app .'
-          bat 'docker push asecurityguru/simple-app'
-        }
-      }
-    }
+//     stage('Docker Build and Push') {
+//       steps {
+//         withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
+//           bat 'docker build -t asecurityguru/simple-app .'
+//           bat 'docker push asecurityguru/simple-app'
+//         }
+//       }
+//     }
      stage('Build') { 
             steps { 
                 script{
