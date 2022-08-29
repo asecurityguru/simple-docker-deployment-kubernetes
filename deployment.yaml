@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: simple-web-app-pod
-        image: 145988340565.dkr.ecr.us-west-2.amazonaws.com/asg:9
+        image: 145988340565.dkr.ecr.us-west-2.amazonaws.com/asg:latest
         ports: 
         - containerPort: 8080
 ---
