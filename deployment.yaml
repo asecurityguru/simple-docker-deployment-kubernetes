@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: simple-web-app-pod
-        image: asecurityguru/simple-web-app-in-docker:latest
+        image: 145988340565.dkr.ecr.us-west-2.amazonaws.com/asg:9
         ports: 
         - containerPort: 8080
 ---
