@@ -28,41 +28,43 @@ pipeline {
 //         }
 //       }
 //     }
-//      stage('Build') { 
-//             steps { 
-//                 script{
-//                  app = docker.build("asg")
+     stage('Build') { 
+            steps { 
+               withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
+                script{
+                 app = docker.build("asg")
+                }
+               }
+            }
+        }
+//       stage ("Build image") {
+//             steps {
+//                 withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
+//                 script {
+//                     docker.build registry
+//                 }
 //                 }
 //             }
 //         }
-      stage ("Build image") {
+    stage('Push') {
             steps {
-                withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
-                script {
-                    docker.build registry
-                }
+                script{
+                    docker.withRegistry('https://145988340565.dkr.ecr.us-west-2.amazonaws.com', 'ecr:us-west-2:aws-credentials') {
+                    app.push("${env.BUILD_NUMBER}")
+                    app.push("latest")
+                    }
                 }
             }
         }
-//     stage('Push') {
-//             steps {
-//                 script{
-//                     docker.withRegistry('https://145988340565.dkr.ecr.us-west-2.amazonaws.com', 'ecr:us-west-2:aws-credentials') {
-//                     app.push("${env.BUILD_NUMBER}")
-//                     app.push("latest")
-//                     }
-//                 }
-//             }
-//         }
-    stage ("docker push") {
-         steps {
-             script {
-                sh "aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 145988340565.dkr.ecr.us-west-2.amazonaws.com"
-                sh "docker push 145988340565.dkr.ecr.us-west-2.amazonaws.com/asg"
+//     stage ("docker push") {
+//          steps {
+//              script {
+//                 sh "aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 145988340565.dkr.ecr.us-west-2.amazonaws.com"
+//                 sh "docker push 145988340565.dkr.ecr.us-west-2.amazonaws.com/asg"
                  
-             }
-           }   
-        }
+//              }
+//            }   
+//         }
     stage('Kubernetes Deployment - DEV') {
       steps {
         withKubeConfig([credentialsId: 'kubelogin']) {
