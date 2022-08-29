@@ -25,23 +25,23 @@ pipeline {
 //         }
 //       }
 //     }
-//      stage('Build') { 
-//             steps { 
-//                 script{
-//                  app = docker.build("asg")
-//                 }
-//             }
-//         }
-//     stage('Push') {
-//             steps {
-//                 script{
-//                     docker.withRegistry('https://145988340565.dkr.ecr.us-west-2.amazonaws.com', 'ecr:us-west-2:aws-credentials') {
-//                     app.push("${env.BUILD_NUMBER}")
-//                     app.push("latest")
-//                     }
-//                 }
-//             }
-//         }
+     stage('Build') { 
+            steps { 
+                script{
+                 app = docker.build("asg")
+                }
+            }
+        }
+    stage('Push') {
+            steps {
+                script{
+                    docker.withRegistry('https://145988340565.dkr.ecr.us-west-2.amazonaws.com', 'ecr:us-west-2:aws-credentials') {
+                    app.push("${env.BUILD_NUMBER}")
+                    app.push("latest")
+                    }
+                }
+            }
+        }
     stage('Kubernetes Deployment - DEV') {
       steps {
         withKubeConfig([credentialsId: 'kubelogin']) {
