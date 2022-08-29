@@ -44,9 +44,9 @@ pipeline {
 //         }
     stage('Kubernetes Deployment - DEV') {
       steps {
-       // withKubeConfig([credentialsId: 'kubelogin']) {
+        withKubeConfig([credentialsId: 'kubeconfig']) {
           bat "kubectl apply -f deployment.yaml"
-        //}
+        }
       }
     }
   }
