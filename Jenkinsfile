@@ -37,8 +37,10 @@ pipeline {
 //         }
       stage ("Build image") {
             steps {
+                withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
                 script {
                     docker.build registry
+                }
                 }
             }
         }
