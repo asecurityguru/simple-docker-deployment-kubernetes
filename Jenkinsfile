@@ -25,6 +25,23 @@ pipeline {
         }
       }
     }
+     stage('Build') { 
+            steps { 
+                script{
+                 app = docker.build("octopus-underwater-app")
+                }
+            }
+        }
+    stage('Push') {
+            steps {
+                script{
+                    docker.withRegistry('https://public.ecr.aws/t4f4l9c8/asg', 'ecr:us-west-2:aws-credentials') {
+                    app.push("${env.BUILD_NUMBER}")
+                    app.push("latest")
+                    }
+                }
+            }
+        }
     stage('Kubernetes Deployment - DEV') {
       steps {
         withKubeConfig([credentialsId: 'kubelogin']) {
